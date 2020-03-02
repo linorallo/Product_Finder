@@ -6,7 +6,9 @@ class Homepage extends Component{
     this.state = {
       itemList: [],
       isLoaded: false,
+      searchString:"",
     }
+    
   }
 
   componentDidMount(){
@@ -33,6 +35,11 @@ class Homepage extends Component{
     .catch(error => console.log('parsing failure', error))
   }
  
+  handleSubmit(event){
+    alert('Search String: ' + this.state.searchString);
+    event.preventDefault();
+  }
+
   render(){
     const {isLoaded, itemList} = this.state;
     if(!isLoaded){
@@ -48,13 +55,11 @@ class Homepage extends Component{
                   <div className="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
                     <h1 className=" display-4 py-2 text-truncate">Product Finder</h1>
                     <div className="px-2">
-                      <form action="" className="justify-content-center">
+                      <form action="" onSubmit={this.handleSubmit} className="justify-content-center">
                         <div className="form-group">
-                          <input type="text" className="form-control" name="search" placeholder="What are you looking for?" />
+                          <input type="text" className="form-control" name="search" placeholder="What are you looking for?" value={this.state.searchString}/>
                         </div>
-                        <div className="form-group">
                         <input type="submit" className="btn btn-primary" value="Go" /> 
-                        </div>
                       </form>
                     </div>
                   </div>

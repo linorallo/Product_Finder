@@ -13,7 +13,7 @@ import Footer from './components/footerComponent/footer';
 import Homepage from './components/pages/homePage';
 import Products from './components/pages/products';
 import Contact from './components/pages/contact';
-import Users from './components/users/users';
+import Search from './components/pages/search';
 
 //includes
 function App() {
@@ -22,6 +22,7 @@ function App() {
       <div className="App">
         <Header/>
         <Route exact path='/' component={Homepage} />
+        <Route exact path='/?search=' component={Search}/>
         <Route exact path='/Products' component={Products} />
         <Route exact path='/contact'component={Contact} />
         <Footer/>
