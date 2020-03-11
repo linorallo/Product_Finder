@@ -1,5 +1,9 @@
 import mysql.connector 
-import Product_Finder.backend.dbScripts as dbScripts
+try:
+    import Product_Finder.backend.dbScripts as dbScripts
+except:
+    import dbScripts
+
 def connectDB() :
     try:
         db = mysql.connector.connect(user = 'root', password = '1308',  host = '127.0.0.1', database = 'mydb')
@@ -13,7 +17,7 @@ def saveToDB(results):
     cursor = db.cursor()
     cursor.execute(dbScripts.retrieveAll())
     retrieved = cursor.fetchall()
-    addProduct = ('INSERT INTO product (itemNumber, productPrice, productName , productLink, productDiscount, productDiscoverDate, store_idstore) VALUES (%s, %s, %s , %s , %s, %s , %s)')
+    addProduct = ('INSERT INTO product (itemNumber, productPrice, productName , productLink, productDiscount, productDiscoverDate, store_idstore, productImg) VALUES (%s, %s, %s , %s , %s, %s , %s, %s)')
     #cursor.executemany(addProduct, results)
     print('-----------------------------------------')
     addedItemCount = 0 

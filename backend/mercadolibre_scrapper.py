@@ -1,7 +1,10 @@
 import bs4
 from urllib.request import urlopen as urlReq
 from bs4 import BeautifulSoup as soup 
-import Product_Finder.backend.sortResults
+try:
+    import Product_Finder.backend.sortResults as sortResults
+except:
+    import sortResults
 import datetime as date
 mercadolibreDBPK = 2
 def searchInMercadoLibre(searchString, blockedWord, searchPageDepth, sortPreference, currency):
@@ -31,7 +34,7 @@ def searchInMercadoLibre(searchString, blockedWord, searchPageDepth, sortPrefere
                 html = webSite.read()
                 webSite.close()
                 page_soup = soup(html, 'html.parser')
-        itemsWhole = page_soup.findAll('li',{'class':'results-item highlighted article stack product'})
+        itemsWhole = page_soup.findAll('li',{'class':'results-item highlighted article stack'})
         for item in itemsWhole:
             def itemAnalysis():
                 #print('--------------------------------')
@@ -41,7 +44,14 @@ def searchInMercadoLibre(searchString, blockedWord, searchPageDepth, sortPrefere
                 try:
                     price = str(item.find('span',{'class':'price__fraction'}).text).replace('.','')
                 except AttributeError as err:
-                    price = str(item.find('div',{'class':'pdp_options__text pdp_options--no-margin'}).text.strip(' $ ').partition(' ')[0]).replace('.','')
+                    try:
+                        price = str(item.find('div',{'class':'pdp_options__text pdp_options--no-margin'}).text.strip(' $ ').partition(' ')[0]).replace('.','')
+                    except AttributeError as err :
+                        price = str(str(item.find('div',{'class':'pdp_options__text pdp_options--no-margin'})).strip(' $ ').partition(' ')[0]).replace('.','')
+                if price == 'None':
+                    print('econtro precios en None')
+                    price = str(item.find('div',{'class':'pdp_options__text pdp_options--no-margin'})).partition('<span>$')[2].partition('</span>')[0].replace('.','')
+                print('price: '+price)
                 if currency == 'USD' :
                     price = float(price) / float(usdCompra)
                     price = str(round(price, 2))
@@ -57,7 +67,9 @@ def searchInMercadoLibre(searchString, blockedWord, searchPageDepth, sortPrefere
                     link = link.partition('JM')[0]+'JM'
                 else :
                     link = link.partition('?')[0]
-                results.append((itemNumber, price, name, link.strip('https://'), discount, str(datetime), mercadolibreDBPK))
+                img = str(item.find('img',{})).partition('src="')[2].partition('"')[0] 
+                print(img)
+                results.append((itemNumber, price, name, link.strip('https://'), discount, str(datetime), mercadolibreDBPK, img))
                 #print("item #"+ itemNumber +": "+ name +" $"+ price + ' OFF: '+ discount )
             bWordFound = 0
             for bWord in blockedWord:
@@ -71,3 +83,4 @@ def searchInMercadoLibre(searchString, blockedWord, searchPageDepth, sortPrefere
             return sortResults.sortIncreasing(results)
         if sortPreference == 'Decreasing' :
             return sortResults.sortDecreasing(results)
+    

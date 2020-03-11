@@ -1,5 +1,8 @@
 import bs4
-import sortResults
+try:
+    import Product_Finder.backend.sortResults as sortResults
+except:
+    import sortResults
 import datetime as date
 from urllib.request import urlopen as urlReq
 from bs4 import BeautifulSoup as soup 
@@ -18,9 +21,12 @@ def searchInNewegg(searchString, blockedWord, searchPageDepth, sortPreference, c
                 webSite.close()
                 page_soup = soup(html, 'html.parser')
         itemsWholeGrid = page_soup.find('div',{'class':'items-view is-grid'})
-        itemsWhole = itemsWholeGrid.findAll('div',{'class':'item-container'})
+        try:
+            itemsWhole = itemsWholeGrid.findAll('div',{'class':'item-container'})
+        except AttributeError as err:
+            print(err)
+            break
         for item in itemsWhole:
-            
             def itemAnalysis():
                 #print('--------------------------------')
                 text = item.find('div',{'class':'item-info'})
@@ -33,10 +39,15 @@ def searchInNewegg(searchString, blockedWord, searchPageDepth, sortPreference, c
                     discount = 0
                     if discount == 'None' :
                         discount = 0
+                if discount=='':
+                    discount=0
                 itemNumber = str(len(results)+1)
                 link = str(text.find('a',{'class':'item-title'})['href']).partition('?')[0].strip('https://')
-                
-                results.append((str(itemNumber), str(price), name, link, str(discount), str(datetime) ,neweggDBPK))
+                try:
+                    img = item.find('img',{})['data-src']
+                except:
+                    img= item.find('img',{})['src']
+                results.append((str(itemNumber), str(price), name, link, str(discount), str(datetime) ,str(neweggDBPK),img))
                 
                 #print("item #"+ itemNumber +": "+ name +" $"+ price + ' OFF: '+ discount )
             bWordFound = 0

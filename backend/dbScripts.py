@@ -8,7 +8,7 @@ def updatePriceProduct(linkProduct, newPrice):
     return 'UPDATE product SET productPrice = ' + newPrice + ' WHERE productLink  = "' + linkProduct + '";'
 
 def searchProducts(searchList, blockedWords) :
-    query = 'SELECT productName, productPrice, productDiscount, productLink FROM product WHERE '
+    query = 'SELECT productName, productPrice, productDiscount, productLink, productImg, productDiscoverDate FROM product WHERE '
     iterationNumber=0
     for searchWord in searchList :
         if iterationNumber == 0 :
@@ -21,4 +21,4 @@ def searchProducts(searchList, blockedWords) :
     return query + ' ;'
 
 def discountSearch():
-    return 'SELECT productName, productPrice, productDiscount, productLink FROM product WHERE productDiscount >=20'
+    return 'SELECT productName, productPrice, productDiscount, productLink, productImg FROM product WHERE productDiscount >=20'

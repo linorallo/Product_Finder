@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {Route} from 'react-router-dom';
+import Search from './search';
 
 class Homepage extends Component{
   constructor(props){
@@ -6,8 +8,10 @@ class Homepage extends Component{
     this.state = {
       itemList: [],
       isLoaded: false,
-      searchString:"",
-    }
+      searchString:'',
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     
   }
 
@@ -25,6 +29,7 @@ class Homepage extends Component{
         name: `${item.name}`,
         price: `${item.price}`,
         discount: `${item.discount}`,
+        img: `${item.img}`,
         link: `https://${item.link}`
       }
     )))
@@ -35,8 +40,18 @@ class Homepage extends Component{
     .catch(error => console.log('parsing failure', error))
   }
  
+  handleChange(event){
+    this.setState({searchString: event.target.value});
+    console.log(this.state.searchString)
+  }
+
   handleSubmit(event){
-    alert('Search String: ' + this.state.searchString);
+    console.log(event)
+    console.log(this.state.searchString)
+    return(
+      <Route  path='/search/{}' component={Search}/>
+    )
+    
     event.preventDefault();
   }
 
@@ -55,11 +70,11 @@ class Homepage extends Component{
                   <div className="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
                     <h1 className=" display-4 py-2 text-truncate">Product Finder</h1>
                     <div className="px-2">
-                      <form action="" onSubmit={this.handleSubmit} className="justify-content-center">
+                      <form id="form-homepage" action="/search" method="get" onSubmit={this.handleSubmit} className="justify-content-center">
                         <div className="form-group">
-                          <input type="text" className="form-control" name="search" placeholder="What are you looking for?" value={this.state.searchString}/>
+                          <input type="text" id="desired" className="form-control" onChange={this.handleChange} name="search" placeholder="What are you looking for?" value={this.state.searchString}/>
                         </div>
-                        <input type="submit" className="btn btn-primary" value="Go" /> 
+                        <input type="submit" className="btn btn-secondary" value="Go" />
                       </form>
                     </div>
                   </div>
@@ -68,29 +83,17 @@ class Homepage extends Component{
             </div>
           </section>
           <div className="container container-fluid">
-          <form>
-                      <div className="container container-fluid" align="center">
-                        <div className="form-group">
-                          <input type="text" className="form-control" name="search" placeholder="What are you looking for?" />
-                          
-                        
-                        </div>
-                        
-                      </div>
-                    </form>
-          <div className="jumbotron jumbotron-fluid" >
-          
-          
-          </div>
+
         <div className="row">
             {itemList.map(item =>(
               <div className="col-sm-4 py-3 px-lg-5 border bg-light">
                 <p>{item.name}</p>
+                <img src={item.img}/>
                 <p>${item.price} | {item.discount}% off!</p>
                 <a  className="btn btn-secondary rounded-pill "  href={item.link} >Explore</a>
               </div>
               
-            ))};
+            ))}
         
           <div className="table-responsive" >
             <table className="table table-sm table-hover">

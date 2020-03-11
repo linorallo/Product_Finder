@@ -36,8 +36,22 @@ header{
 body{
     background:white;
     color: black;
+    
 }
 
+#img-item{
+    width: 200px;
+}
+
+#text-price{
+    color: orange;
+}
+
+#img-container{
+    max-height: 200px;
+    height: 200px;
+    width: 200px;
+}
 
 #cover{
     background: #222 url('https://unsplash.it/1920/1080/?random&grayscale') center center no-repeat;
@@ -55,7 +69,7 @@ body{
     z-index: 1;
 }
 
-form:before {
+#form-homepage:before {
     content: '';
     height: 100%;
     left: 0;

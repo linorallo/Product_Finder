@@ -1,6 +1,9 @@
 from bs4 import BeautifulSoup as soup
 #import bs4
-import Product_Finder.backend.sortResults
+try:
+    import Product_Finder.backend.sortResults as sortResults
+except:
+    import sortResults
 import urllib
 from urllib.request import urlopen as urlReq
 #from bs4 import BeautifulSoup as soup 
@@ -50,7 +53,9 @@ def searchInAmazon(searchString, blockedWord, searchPageDepth, sortPreference, c
                                 discount = '0'     
                             itemNumber = str(len(results))
                             link = ('amazon.com' + item.find('a',{'class':'a-link-normal a-text-normal'})['href']).partition('ref')[0]
-                            results.append((itemNumber, price, name, link, discount, str(datetime), amazonDBPK))
+                            img = item.find('img', {'class':'s-image'})['src']
+                            print(img)
+                            results.append((itemNumber, price, name, link, discount, str(datetime), amazonDBPK, img))
                         except AttributeError as err:
                             pass
                             #print('Item Skipped in Amazon due to: ' +str(err))
@@ -67,3 +72,4 @@ def searchInAmazon(searchString, blockedWord, searchPageDepth, sortPreference, c
         return sortResults.sortIncreasing(results)
     if sortPreference == 'Decreasing' :
         return sortResults.sortDecreasing(results)
+    
