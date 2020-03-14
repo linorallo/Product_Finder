@@ -146,23 +146,49 @@ if searchChoice == 2 :
         else :
             continue
     print('Search initiated... (implement animation)')
-    while True:
-        if amazonThread.is_alive() == False :
-            amazonThreadStatus = False
-        else:
-            amazonThreadStatus = True
-        if neweggThread.is_alive() == False :
-            neweggThreadStatus = False
-        else:
-            neweggThreadStatus =  True
-        if mercadolibreThread.is_alive() == False :
-            mercadolibreThreadStatus = False
-        else:
-            mercadolibreThreadStatus = True
-        if amazonThreadStatus == False :
-            if neweggThreadStatus == False :
-                if mercadolibreThreadStatus == False:
-                    break
+    choiceAll =''
+    if choiceAll =='all':
+        while True:
+            if amazonThread.is_alive() == False :
+                amazonThreadStatus = False
+            else:
+                amazonThreadStatus = True
+            if neweggThread.is_alive() == False :
+                neweggThreadStatus = False
+            else:
+                neweggThreadStatus =  True
+            if mercadolibreThread.is_alive() == False :
+                mercadolibreThreadStatus = False
+            else:
+                mercadolibreThreadStatus = True
+            if amazonThreadStatus == False :
+                if neweggThreadStatus == False :
+                    if mercadolibreThreadStatus == False:
+                        break
+    if choiceAmazon =='Y':
+        while True: 
+            if amazonThread.is_alive() == False :
+                amazonThreadStatus = False
+            else:
+                amazonThreadStatus = True
+            if amazonThreadStatus ==False :
+                break
+    if choiceNewegg == 'Y':
+        while True:
+            if neweggThread.is_alive() == False :
+                neweggThreadStatus = False
+            else:
+                neweggThreadStatus =  True
+            if neweggThreadStatus ==False:
+                break
+    if choiceML == 'Y':
+        while True:
+            if mercadolibreThread.is_alive() == False :
+                mercadolibreThreadStatus = False
+            else:
+                mercadolibreThreadStatus =  True
+            if mercadolibreThreadStatus ==False:
+                break
     print('All threads closed')
     results = []
     queue_length = outputQ.qsize()

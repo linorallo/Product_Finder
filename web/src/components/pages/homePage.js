@@ -88,7 +88,7 @@ class Homepage extends Component{
             {itemList.map(item =>(
               <div className="col-sm-4 py-3 px-lg-5 border bg-light">
                 <p>{item.name}</p>
-                <img src={item.img}/>
+                <img src={item.img} id='img-item' />
                 <p>${item.price} | {item.discount}% off!</p>
                 <a  className="btn btn-secondary rounded-pill "  href={item.link} >Explore</a>
               </div>

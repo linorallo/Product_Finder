@@ -57,8 +57,8 @@ def search(searchString):
     #results =  sortResults.sortIncreasing(response)
     return jsonify({'results':response}) 
 
-@app.route('/search/<searchString>', methods=['GET','POST'])
-def searchRequest(searchString):
+@app.route('/search/<store>/<searchString>', methods=['GET','POST'])
+def searchRequest(store,searchString):
     if request.method == 'POST':
         pass
     searchPageDepth =2
@@ -84,7 +84,8 @@ def searchRequest(searchString):
     for word in searchWords :
         searchStr = searchStr + word
     response = [] 
-    for result in main.apiSearch(searchStr,blockedWords, searchPageDepth) :
+    print(searchStr)
+    for result in main.apiSearch(store,searchStr,blockedWords, searchPageDepth) :
         print(result)
         response.append({'name':result[2],'price':result[1], 'discount':result[4],'link': result[3], 'img': result[7]})
     #main_standalone
