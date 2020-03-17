@@ -6,7 +6,7 @@ except:
 
 def connectDB() :
     try:
-        db = mysql.connector.connect(user = 'root', password = '1308',  host = '127.0.0.1', database = 'mydb')
+        db = mysql.connector.connect(user = 'lino', password = '1308',  host = '127.0.0.1', database = 'mydb')
         print('DataBase accessed')
     except db.Error as err:
         print(err)
