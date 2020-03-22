@@ -6,10 +6,15 @@ except:
 
 def connectDB() :
     try:
-        db = mysql.connector.connect(user = 'root', password = '1308',  host = '127.0.0.1', database = 'mydb')
+        db = mysql.connector.connect(user = 'lino', password = '1308',  host = '127.0.0.1', database = 'productFinder')
         print('DataBase accessed')
     except db.Error as err:
-        print(err)
+        print('Database access #1 failed, attempting again...')
+        try:
+            db = mysql.connector.connect(user = 'root', password = '', host = '127.0.0.1', database = 'productFinder')
+            print('Database accessed')
+        except db.Error as err:
+            print(err)
     return db 
     
 def saveToDB(results):

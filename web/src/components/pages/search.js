@@ -31,7 +31,7 @@ class Search extends Component{
 ///        .then(parsedJSON => console.log(parsedJSON.results))  para mostar resultados en consola
     fetchData(){
         console.log('http://localhost:5000/search/'+window.location.search.replace('?search=',''));
-        fetch('http://localhost:5000/search/'+window.location.search.replace('?search=',''),{ mode: 'cors'})
+        fetch('http://localhost:5000/search/all/'+window.location.search.replace('?search=',''),{ mode: 'cors'})
         .then(response => response.json())
 
         .then(parsedJSON => parsedJSON.results.map(item => (

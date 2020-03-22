@@ -1,6 +1,9 @@
 from flask import Flask
 from flask import jsonify
-from flask_sqlalchemy import SQLAlchemy
+import sys
+print('--------------------------------------')
+print(sys.path)
+sys.path.append('/home/lino/Lino/Product_Finder/backend')
 from flask_cors import CORS
 from flask import request
 import json
@@ -61,7 +64,7 @@ def search(searchString):
 def searchRequest(store,searchString):
     if request.method == 'POST':
         pass
-    searchPageDepth =2
+    searchPageDepth =1
     searchWords=[]
     blockedWords=[]
     blockedString=searchString
