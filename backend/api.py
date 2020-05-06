@@ -3,7 +3,9 @@ from flask import jsonify
 import sys
 print('--------------------------------------')
 print(sys.path)
-sys.path.append('/home/lino/Lino/Product_Finder/backend')
+sys.path.append('/home/lino/Lino/Product_Finder/backend') # PC Asus location
+sys.path.append('/home/lino/Product_Finder/backend') # PC Dell location
+print(sys.path)
 from flask_cors import CORS
 from flask import request
 import json
@@ -14,11 +16,13 @@ try:
     import Product_Finder.backend.main as main
     #import Product_Finder.backend.main_standalone as main_standalone
 except:
+    print('1st import FAILED!')
     import db
     import dbScripts
+    import db
     import sortResults
     import main
-    #import main_standalone
+    import main_standalone
 
 app = Flask(__name__)
 CORS(app)
